@@ -84,3 +84,18 @@ select:focus {
 .button_get_eleve:hover {
   border-color: #777777; 
 }
+
+.button_reset_classe {
+  margin: 0 auto;
+  font-size: 20px;
+  padding: 8px; 
+  border-radius: 4px; 
+  border: 1px solid #ccc; 
+  background-color: #ff4d4d;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
+  cursor: pointer;
+}
+
+.button_reset_classe:hover {
+  border-color: #777777; 
+}

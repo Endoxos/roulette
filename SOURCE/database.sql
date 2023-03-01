@@ -25,10 +25,14 @@ INSERT INTO ELEVE (ID_CLASSE, NOM, PRENOM, ABSENT, STATUS) VALUES
 ('1', 'Eleve', 'Marc', false, false);
 
 INSERT INTO ELEVE (ID_CLASSE, NOM, PRENOM, ABSENT, STATUS) VALUES 
-('2', 'ELEVE', 'Robin', false, false),
-('2', 'ELEVE', 'Julie', false, false),
-('2', 'ELEVE', 'Dylan', false, false),
-('2', 'ELEVE', 'Guillaume', false, false);
+('2', 'Smith', 'Sophia', false, false),
+('2', 'Brown', 'Ethan', false, false),
+('2', 'Garcia', 'Nora', false, false),
+('2', 'Davis', 'Max', false, false),
+('2', 'Miller', 'Ella', false, false),
+('2', 'Gonzalez', 'Lucas', false, false),
+('2', 'Taylor', 'Avery', false, false),
+('2', 'Anderson', 'Leo', false, false);
 
 INSERT INTO CLASSE (NOM_CLASSE) VALUES 
 ('Classe TEST');
