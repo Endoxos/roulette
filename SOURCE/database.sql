@@ -18,6 +18,10 @@ CREATE TABLE ELEVE(
     STATUS BOOL
 );
 
+INSERT INTO CLASSE (NOM_CLASSE) VALUES
+('Classe TEST'),
+('Classe TEST 2');
+
 INSERT INTO ELEVE (ID_CLASSE, NOM, PRENOM, ABSENT, STATUS) VALUES 
 ('1', 'Cosse', 'Antonin', false, false),
 ('1', 'Bonotti', 'Luca', false, false),
@@ -34,5 +38,3 @@ INSERT INTO ELEVE (ID_CLASSE, NOM, PRENOM, ABSENT, STATUS) VALUES
 ('2', 'Taylor', 'Avery', false, false),
 ('2', 'Anderson', 'Leo', false, false);
 
-INSERT INTO CLASSE (NOM_CLASSE) VALUES 
-('Classe TEST');
