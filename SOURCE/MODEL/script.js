@@ -115,7 +115,7 @@ button_absent.addEventListener("click", () => {
     xhr_setEleveAsbent.open("POST", "SOURCE/CONTROLLER/setAbsentEleve.php");
     xhr_setEleveAsbent.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    xhr_resetNote.onload = function () {
+    xhr_setEleveAsbent.onload = function () {
         getEleve(); // actualisation de la liste des élèves
     };
 
