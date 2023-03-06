@@ -66,10 +66,12 @@ function processNumberEleve(numberEleve) {
     xhr_statusEleve.open("POST", "SOURCE/CONTROLLER/setStatusEleve.php");
     xhr_statusEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    xhr_statusEleve.onload = function () {
+        getEleve(); // actualisation de la liste des élèves
+    };
+
     chosen_eleve_id = document.querySelector('#eleve p[value="' + eleveAleatoire + '"]').getAttribute('data-id_eleve');
     xhr_statusEleve.send("ID_ELEVE=" + chosen_eleve_id);
-
-    getEleve(); // actualisation de la liste des élèves
 }
 
 // fonction pour réinitialiser la liste des élèves déjà tirés au sort et absents
@@ -80,9 +82,12 @@ button_reset_classe.addEventListener("click", () => {
     xhr_resetClasse.open("POST", "SOURCE/CONTROLLER/resetClasse.php");
     xhr_resetClasse.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    xhr_resetClasse.onload = function () {
+        getEleve(); // actualisation de la liste des élèves
+    };
+
     xhr_resetClasse.send("ID_CLASSE=" + select_classe.value);
     
-    getEleve(); // actualisation de la liste des élèves
 });
 
 // fonction pour réinitialiser les notes des élèves de la classe sélectionné
@@ -93,9 +98,13 @@ button_reset_note.addEventListener("click", () => {
     xhr_resetNote.open("POST", "SOURCE/CONTROLLER/resetNote.php");
     xhr_resetNote.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    xhr_resetNote.onload = function () {
+        actual_note.replaceChildren('');
+        old_note.replaceChildren('');
+    };
+
     xhr_resetNote.send("ID_CLASSE=" + select_classe.value);
-    actual_note.replaceChildren('');
-    old_note.replaceChildren('');
+
 });
 
 // fonction pour mettre un élève absent
@@ -106,9 +115,12 @@ button_absent.addEventListener("click", () => {
     xhr_setEleveAsbent.open("POST", "SOURCE/CONTROLLER/setAbsentEleve.php");
     xhr_setEleveAsbent.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    xhr_resetNote.onload = function () {
+        getEleve(); // actualisation de la liste des élèves
+    };
+
     xhr_setEleveAsbent.send("ID_ELEVE=" + chosen_eleve_id);
     
-    getEleve(); // actualisation de la liste des élèves
 });
 
 // lorsque le button est appuyé, un élève qui était absent est tiré au sort
@@ -142,10 +154,13 @@ function processNumberEleveAbsent(numberEleve) {
     xhr_statusEleve.open("POST", "SOURCE/CONTROLLER/setStatusEleve.php");
     xhr_statusEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+    xhr_statusEleve.onload = function () {
+        getEleve(); // actualisation de la liste des élèves
+    };
+    
     chosen_eleve_id = document.querySelector('#eleve p[value="AB' + eleveAleatoire + '"]').getAttribute('data-id_eleve');
     xhr_statusEleve.send("ID_ELEVE=" + chosen_eleve_id);
 
-    getEleve(); // actualisation de la liste des élèves
 }
 
 // lorsque le button est appuyé, l'élève choisi est noté
@@ -159,12 +174,12 @@ button_send_note.addEventListener("click", () => {
     xhr_sendNoteEleve.onload = function () {
         actual_note.replaceChildren('');
         $('#actual_note').append("Moyenne actuelle : " + this.responseText); // utilise jquery pour tranformer la requete en code html
+        getNote();
         };
 
     const note = document.getElementById("input_note");
     xhr_sendNoteEleve.send("ID_ELEVE=" + chosen_eleve_id + "&NOTE=" + note.value);
 
-    getNote();
 });
 
 // fonction pour récupérer les notes d'un élève
