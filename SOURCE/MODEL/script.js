@@ -134,3 +134,19 @@ function processNumberEleveAbsent(numberEleve) {
 
     getEleve(); // actualisation de la liste des élèves
 }
+
+// lorsque le button est appuyé, l'élève choisi est noté
+const button_send_note = document.getElementById("button_send_note");
+button_send_note.addEventListener("click", () => {
+
+    var xhr_sendNoteEleve = new XMLHttpRequest();
+    xhr_sendNoteEleve.open("POST", "SOURCE/CONTROLLER/setNoteEleve.php");
+    xhr_sendNoteEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr_sendNoteEleve.onload = function () {
+        console.log(this.responseText);
+        };
+
+    const note = document.getElementById("input_note");
+    xhr_sendNoteEleve.send("ID_ELEVE=" + chosen_eleve_id + "&NOTE=" + note.value);
+});
