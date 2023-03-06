@@ -94,6 +94,8 @@ button_reset_note.addEventListener("click", () => {
     xhr_resetNote.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr_resetNote.send("ID_CLASSE=" + select_classe.value);
+    actual_note.replaceChildren('');
+    old_note.replaceChildren('');
 });
 
 // fonction pour mettre un élève absent
@@ -161,4 +163,23 @@ button_send_note.addEventListener("click", () => {
 
     const note = document.getElementById("input_note");
     xhr_sendNoteEleve.send("ID_ELEVE=" + chosen_eleve_id + "&NOTE=" + note.value);
+
+    getNote();
 });
+
+// fonction pour récupérer les notes d'un élève
+function getNote() {
+
+    var xhr_getNotes = new XMLHttpRequest();
+    xhr_getNotes.open("POST", "SOURCE/VIEW/getNote.php");
+    xhr_getNotes.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr_getNotes.onload = function () {
+        // vide la div pour remplacer par la requete reçu
+        old_note.replaceChildren('');
+        $('#old_note').append("<p> Ancienne note : </p>"); // utilise jquery pour tranformer la requete en code html
+        $('#old_note').append(this.responseText); // utilise jquery pour tranformer la requete en code html
+    };
+
+    xhr_getNotes.send("ID_ELEVE=" + chosen_eleve_id);
+}
