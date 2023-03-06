@@ -1,3 +1,8 @@
+// variables
+let chosen_eleve_id;
+
+
+
 // récupère les classes
 var xhr_classe = new XMLHttpRequest();
 xhr_classe.open("POST", "SOURCE/VIEW/getClasse.php");
@@ -48,6 +53,7 @@ button_get_eleve.addEventListener("click", () => {
     xhr_numberEleve.send("ID_CLASSE=" + select_classe.value);
 });
 
+// fonction pour gérer l'élève choisi
 function processNumberEleve(numberEleve) {
 
     // choisi un élève au hasard, l'affiche et le barre en rouge
@@ -60,17 +66,18 @@ function processNumberEleve(numberEleve) {
     xhr_statusEleve.open("POST", "SOURCE/CONTROLLER/setStatusEleve.php");
     xhr_statusEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    var ID_ELEVE = document.querySelector('#eleve p[value="' + eleveAleatoire + '"]').getAttribute('data-id_eleve');
-    xhr_statusEleve.send("ID_ELEVE=" + ID_ELEVE + "&STATUS=true");
+    chosen_eleve_id = document.querySelector('#eleve p[value="' + eleveAleatoire + '"]').getAttribute('data-id_eleve');
+    xhr_statusEleve.send("ID_ELEVE=" + chosen_eleve_id);
 
     getEleve(); // actualisation de la liste des élèves
 }
 
+// fonction pour réinitialiser la liste des élèves déjà tirés au sort et absents
 const button_reset_classe = document.getElementById("button_reset_classe");
 button_reset_classe.addEventListener("click", () => {
 
     var xhr_resetClasse = new XMLHttpRequest();
-    xhr_resetClasse.open("POST", "SOURCE/CONTROLLER/resetStatusEleve.php");
+    xhr_resetClasse.open("POST", "SOURCE/CONTROLLER/resetClasse.php");
     xhr_resetClasse.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr_resetClasse.send("ID_CLASSE=" + select_classe.value);
@@ -78,4 +85,52 @@ button_reset_classe.addEventListener("click", () => {
     getEleve(); // actualisation de la liste des élèves
 });
 
+// fonction pour mettre un élève absent
+const button_absent = document.getElementById("button_absent");
+button_absent.addEventListener("click", () => {
 
+    var xhr_setEleveAsbent = new XMLHttpRequest();
+    xhr_setEleveAsbent.open("POST", "SOURCE/CONTROLLER/setAbsentEleve.php");
+    xhr_setEleveAsbent.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr_setEleveAsbent.send("ID_ELEVE=" + chosen_eleve_id);
+    
+    getEleve(); // actualisation de la liste des élèves
+});
+
+// lorsque le button est appuyé, un élève qui était absent est tiré au sort
+const button_get_eleve_absent = document.getElementById("button_get_eleve_absent");
+button_get_eleve_absent.addEventListener("click", () => {
+
+    var xhr_numberEleveAbsent = new XMLHttpRequest();
+    xhr_numberEleveAbsent.open("POST", "SOURCE/CONTROLLER/getNumberEleveAbsent.php");
+    xhr_numberEleveAbsent.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr_numberEleveAbsent.onload = function () {
+        var numberEleve = this.responseText;
+
+        // appel d'une fonction pour poursuivre le traitement (pour garder la valeur de numberEleve parce que la requête est asynchrone)
+        processNumberEleveAbsent(numberEleve);
+    };
+
+    xhr_numberEleveAbsent.send("ID_CLASSE=" + select_classe.value);
+});
+
+// fonction pour tirer au sort un élève
+function processNumberEleveAbsent(numberEleve) {
+
+    // choisi un élève au hasard, l'affiche et le barre en rouge
+    var eleveAleatoire = Math.floor(Math.random() * (numberEleve - 1 + 1)) + 1;
+    var eleveChoisi = document.querySelector('#eleve p[value="AB' + eleveAleatoire + '"]')
+    selected_eleve.replaceChildren(eleveChoisi.textContent);
+
+    // lance la requette php pour mettre à jour la bdd
+    var xhr_statusEleve = new XMLHttpRequest();
+    xhr_statusEleve.open("POST", "SOURCE/CONTROLLER/setStatusEleve.php");
+    xhr_statusEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    chosen_eleve_id = document.querySelector('#eleve p[value="AB' + eleveAleatoire + '"]').getAttribute('data-id_eleve');
+    xhr_statusEleve.send("ID_ELEVE=" + chosen_eleve_id);
+
+    getEleve(); // actualisation de la liste des élèves
+}
