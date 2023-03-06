@@ -9,6 +9,8 @@ $mysqli = new mysqli("localhost", "roulette", "roulette", "roulette");
 $mysqli->query("INSERT INTO NOTE (ID_ELEVE, NOTE) VALUES ('".$ID_ELEVE."', ".$NOTE.");");
 $result = $mysqli->query("SELECT AVG(NOTE) AS MOYENNE FROM NOTE WHERE ID_ELEVE=".$ID_ELEVE.";");
 
-echo ($result);
+foreach ($result as $valeur) {
+    echo ($valeur['MOYENNE']);
+}
 
 ?>

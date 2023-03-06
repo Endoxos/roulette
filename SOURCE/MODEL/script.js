@@ -85,6 +85,17 @@ button_reset_classe.addEventListener("click", () => {
     getEleve(); // actualisation de la liste des élèves
 });
 
+// fonction pour réinitialiser les notes des élèves de la classe sélectionné
+const button_reset_note = document.getElementById("button_reset_note");
+button_reset_note.addEventListener("click", () => {
+
+    var xhr_resetNote = new XMLHttpRequest();
+    xhr_resetNote.open("POST", "SOURCE/CONTROLLER/resetNote.php");
+    xhr_resetNote.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr_resetNote.send("ID_CLASSE=" + select_classe.value);
+});
+
 // fonction pour mettre un élève absent
 const button_absent = document.getElementById("button_absent");
 button_absent.addEventListener("click", () => {
@@ -144,7 +155,8 @@ button_send_note.addEventListener("click", () => {
     xhr_sendNoteEleve.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
     xhr_sendNoteEleve.onload = function () {
-        console.log(this.responseText);
+        actual_note.replaceChildren('');
+        $('#actual_note').append("Moyenne actuelle : " + this.responseText); // utilise jquery pour tranformer la requete en code html
         };
 
     const note = document.getElementById("input_note");
