@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ROULETTE</title>
-    <link href="SOURCE/MODEL/style.css" rel="stylesheet">
+    <link href="SOURCE/MODEL/INDEX/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -23,6 +23,10 @@
             </div>
             <button class="button_reset_classe" id="button_reset_classe">Réinitialiser la classe</button>
             <button class="button_reset_note" id="button_reset_note">Réinitialiser les notes</button>
+            <form method="post" action="stats.php">
+                <input type="hidden" id="value_classe_stats" name="ID_CLASSE" value="">
+                <button class="button_stats_classe" type="submit">Voir les statistiques de la classe</button>
+            </form>        
         </div>
         <div class="right_div">
             <div class="div_button">

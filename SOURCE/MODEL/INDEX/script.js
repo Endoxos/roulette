@@ -30,6 +30,9 @@ function getEleve() {
         $('#eleve').append(this.responseText); // utilise jquery pour tranformer la requete en code html
     };
     xhr_view.send("CLASSE_VALUE=" + classe_value + "&FUNCTION_NAME=getEleve");
+
+    // actualise la value pour le button statistiques
+    document.getElementById("value_classe_stats").value = classe_value;
 }
 
 // lorsque le button est appuyé, un élève est tiré au sort
